@@ -80,3 +80,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// ==========================================
+// FORMSUBMIT AJAX INTEGRATION (SAME-PAGE SUBMISSION)
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const forms = document.querySelectorAll('form[action*="formsubmit.co"]');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page redirect
+            
+            const btn = form.querySelector('button[type="submit"]');
+            const originalBtnText = btn.innerHTML;
+            
+            // Show loading state
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
+            btn.disabled = true;
+
+            // FormSubmit requires the /ajax/ endpoint for non-redirect submissions
+            let actionUrl = form.action;
+            if (!actionUrl.includes('/ajax/')) {
+                actionUrl = actionUrl.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+            }
+
+            const formData = new FormData(form);
+
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === "true" || data.success === true) {
+                    form.reset();
+                    // Success UI
+                    btn.innerHTML = '<i class="bi bi-check-circle me-2"></i>Sent Successfully!';
+                    btn.classList.add('bg-success', 'text-white', 'border-success');
+                    
+                    // Revert after 4 seconds
+                    setTimeout(() => {
+                        btn.innerHTML = originalBtnText;
+                        btn.classList.remove('bg-success', 'text-white', 'border-success');
+                        btn.disabled = false;
+                    }, 4000);
+                } else {
+                    throw new Error(data.message || 'Submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('FormSubmit Error:', error);
+                // Error UI
+                btn.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Error. Try Again.';
+                btn.classList.add('bg-danger', 'text-white', 'border-danger');
+                
+                // Revert after 4 seconds
+                setTimeout(() => {
+                    btn.innerHTML = originalBtnText;
+                    btn.classList.remove('bg-danger', 'text-white', 'border-danger');
+                    btn.disabled = false;
+                }, 4000);
+            });
+        });
+    });
+});

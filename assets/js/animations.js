@@ -14,11 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(backToTop);
 
     backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     // 7. SAFETY FALLBACK
     // Ensure all elements become visible even if JS observer fails or scrolling is skipped
     setTimeout(() => {
-        document.querySelectorAll('.reveal-assigned:not(.reveal-visible)').forEach(el => {
+        document.querySelectorAll('.reveal-assigned:not(.reveal-visible), .reveal-up:not(.reveal-visible)').forEach(el => {
             el.classList.add('reveal-visible');
         });
     }, 2500); // 2.5 seconds safety net
@@ -91,6 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, revealOptions);
+
+    
+    // Automatically observe any element with hardcoded reveal-* classes
+    document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale, .reveal-fade').forEach(el => {
+        if (!el.classList.contains('reveal-assigned')) {
+            el.classList.add('reveal-assigned');
+            revealObserver.observe(el);
+        }
+    });
 
     // Staggered reveals for grids (rows)
     document.querySelectorAll('.row').forEach(row => {

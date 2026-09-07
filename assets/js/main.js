@@ -114,30 +114,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginLinks = document.querySelectorAll('a[href="login.html"]');
     const registerLinks = document.querySelectorAll('a[href="register.html"]');
 
-    if (currentUser) {
+        if (currentUser) {
         loginLinks.forEach(link => {
             if (link.closest('.navbar-controls')) {
-                link.textContent = `Hi, ${currentUser.name.split(' ')[0]}`;
-                link.href = 'profile.html';
-                link.innerHTML = `<i class="bi bi-person-circle me-1"></i> ` + link.innerHTML;
+                link.classList.add('d-none'); // Hide the login text link completely
             }
         });
         
         registerLinks.forEach(link => {
             if (link.closest('.navbar-controls')) {
-                link.textContent = 'Logout';
-                link.href = '#';
-                link.classList.remove('btn-primary');
-                link.classList.add('btn-outline-danger');
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('currentUser');
-                    window.location.reload();
-                });
+                // Replace the Sign Up button with a Bootstrap Dropdown!
+                const dropdownHtml = `
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 py-2 dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="white-space: nowrap;">
+                            <i class="bi bi-person-circle"></i> Hi, ${currentUser.name.split(' ')[0]}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2 rounded-3" style="min-width: 150px;">
+                            <li><a class="dropdown-item py-2" href="profile.html"><i class="bi bi-person me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item py-2" href="dashboard.html"><i class="bi bi-grid me-2"></i> Dashboard</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 text-danger logout-action" href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                link.outerHTML = dropdownHtml;
             } else {
                 link.textContent = 'Go to Dashboard';
                 link.href = 'dashboard.html';
             }
+        });
+
+        // Attach event listeners to the newly created logout buttons
+        document.querySelectorAll('.logout-action').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            });
         });
     }
 
