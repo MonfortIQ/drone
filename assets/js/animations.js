@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, 2500); // 2.5 seconds safety net
 
-});
-    });
 
     // 2. SCROLL LOGIC (Progress, Sticky Nav, Back to Top)
     const navbar = document.querySelector('.navbar-custom');
