@@ -7,15 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     progressBar.id = 'scroll-progress';
     document.body.appendChild(progressBar);
 
-    const backToTop = document.createElement('button');
-    backToTop.id = 'back-to-top';
-    backToTop.innerHTML = '<i class="bi bi-arrow-up"></i>';
-    backToTop.setAttribute('aria-label', 'Back to top');
-    document.body.appendChild(backToTop);
+    
 
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    
 
     // 7. SAFETY FALLBACK
     // Ensure all elements become visible even if JS observer fails or scrolling is skipped
@@ -36,11 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         progressBar.style.width = scrollPercent + '%';
 
-        if (scrollTop > 400) {
-            backToTop.classList.add('show');
-        } else {
-            backToTop.classList.remove('show');
-        }
+        
 
         if (navbar) {
             if (scrollTop > 50) {

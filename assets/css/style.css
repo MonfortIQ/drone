@@ -271,7 +271,7 @@ img { max-width: 100%; height: auto; border-radius: var(--radius-sm); }
 .masonry-item:hover .masonry-overlay {
   background: linear-gradient(to top, rgba(7, 26, 45, 0.95) 0%, rgba(7, 26, 45, 0.7) 50%, rgba(7, 26, 45, 0.2) 100%);
 }
-.masonry-overlay h4, .masonry-overlay p {
+.masonry-overlay h4 { color: #ffffff !important; } .masonry-overlay h4, .masonry-overlay p {
   transform: translateY(10px);
   transition: transform 0.4s ease;
 }
@@ -599,7 +599,9 @@ body.dark-mode .hover-shadow:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.5) !im
         padding-right: 0.6rem !important;
         padding-top: 0.5rem !important;
         padding-bottom: 0.5rem !important;
-        font-size: 0.75rem !important;
+        font-size: 0.65rem !important;
+          white-space: nowrap !important;
+          flex: 1 1 auto;
         letter-spacing: 0px !important;
     }
 }

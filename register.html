@@ -63,7 +63,7 @@
                     <label class="form-label fw-medium small text-muted">Full Name</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent text-muted"><i class="bi bi-person"></i></span>
-                        <input type="text" id="regName" class="form-control form-control-lg form-control-custom shadow-none" placeholder="John Doe" required>
+                        <input type="text" id="regName" class="form-control form-control-lg form-control-custom shadow-none" placeholder="John Doe"  minlength="2" pattern="^[A-Za-z\s]{2,}$" title="Please enter a valid name using only letters (minimum 2 characters)." required>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -79,6 +79,7 @@
                         <div class="input-group">
                             <span class="input-group-text bg-transparent text-muted"><i class="bi bi-lock"></i></span>
                             <input type="password" id="regPassword" class="form-control form-control-lg form-control-custom shadow-none" placeholder="••••••••" minlength="6" required>
+<button class="btn btn-outline-secondary border-secondary border-opacity-25 text-muted toggle-password" type="button" style="z-index: 10;"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -86,12 +87,13 @@
                         <div class="input-group">
                             <span class="input-group-text bg-transparent text-muted"><i class="bi bi-lock-fill"></i></span>
                             <input type="password" id="regConfirm" class="form-control form-control-lg form-control-custom shadow-none" placeholder="••••••••" minlength="6" required>
+<button class="btn btn-outline-secondary border-secondary border-opacity-25 text-muted toggle-password" type="button" style="z-index: 10;"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="mb-4 form-check">
                     <input type="checkbox" class="form-check-input border-secondary shadow-none" id="regTerms" required>
-                    <label class="form-check-label small text-muted" for="regTerms">I agree to the <a href="#" class="text-primary text-decoration-none">Terms of Service</a></label>
+                    <label class="form-check-label small text-muted" for="regTerms">I agree to the </label>
                 </div>
                 <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold mb-4 shadow-sm transition-03">Create Account <i class="bi bi-arrow-right ms-2"></i></button>
                 <p class="text-center small text-muted mb-0">Already have an account? <a href="login.html" class="text-dark fw-bold text-decoration-none hover-primary transition-03">Sign In</a></p>
